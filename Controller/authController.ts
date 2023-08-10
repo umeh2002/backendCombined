@@ -6,14 +6,14 @@ import authModel from "../Model/authModel"
 
 export const createUser =async (req:any, res: Response) => {
    try {
-    const {userName, email, password,} = req.body;
+    const {userName, email, password,confirmPassword} = req.body;
     const salt: any = await bcrypt.genSalt(10);
     const hashed: any =  await bcrypt.hash(password, salt);
 
 
-    // if(password !== confirmPassword){
-    //     return res.status(400).json({error:"Confirm password must be password"})
-    //    }
+    if(password !== confirmPassword){
+        return res.status(400).json({error:"Confirm password must be password"})
+       }
 
     const { secure_url, public_id } = await cloudinary.uploader.upload(
         req.file?.path,
@@ -25,7 +25,7 @@ export const createUser =async (req:any, res: Response) => {
         password: hashed,
         avatar: secure_url,
         avatarID: public_id,
-        // comfirmPassword:hashed
+        comfirmPassword:hashed
       });
 
     //   console.log(user)

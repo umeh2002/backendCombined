@@ -26,8 +26,8 @@ const authModel = new mongoose_1.default.Schema({
         type: String,
         required: true
     },
-    // confirmPassword:{
-    //     type:String,
-    // }
+    confirmPassword: {
+        type: String,
+    }
 });
 exports.default = mongoose_1.default.model("auths", authModel);

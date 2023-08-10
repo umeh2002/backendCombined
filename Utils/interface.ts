@@ -10,7 +10,7 @@ interface iTask{
 interface iAuth {
     userName?:string;
     password?:string;
-    // confirmPassword?:string;
+    confirmPassword?:string;
     avatar?:string;
     avatarUrl?:string;
     email?:string;

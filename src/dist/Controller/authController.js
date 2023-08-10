@@ -19,12 +19,12 @@ const authModel_1 = __importDefault(require("../Model/authModel"));
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        const { userName, email, password, } = req.body;
+        const { userName, email, password, confirmPassword } = req.body;
         const salt = yield bcrypt_1.default.genSalt(10);
         const hashed = yield bcrypt_1.default.hash(password, salt);
-        // if(password !== confirmPassword){
-        //     return res.status(400).json({error:"Confirm password must be password"})
-        //    }
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: "Confirm password must be password" });
+        }
         const { secure_url, public_id } = yield cloudinary_1.default.uploader.upload((_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
         const user = yield authModel_1.default.create({
             userName,
@@ -32,7 +32,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             password: hashed,
             avatar: secure_url,
             avatarID: public_id,
-            // comfirmPassword:hashed
+            comfirmPassword: hashed
         });
         //   console.log(user)
         res.status(201).json({
